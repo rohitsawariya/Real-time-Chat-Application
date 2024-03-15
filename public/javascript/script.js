@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const app = document.querySelector(".app");
     const socket = io();
   
-    let uname;
+    let name;
   
     app.querySelector(".join-screen #join-user").addEventListener("click", function () {
       let username = app.querySelector(".join-screen #username").value;
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
       socket.emit("newuser", username);
-      uname = username;
+      name = username;
       app.querySelector(".join-screen").classList.remove("active");
       app.querySelector(".chat-screen").classList.add("active");
     });
@@ -32,11 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return; // Avoid sending empty messages
         }
         renderMessage("my", {
-            username: uname,
+            username: name,
             text: message
         });
         socket.emit("chat", {
-            username: uname,
+            username: name,
             text: message
         });
         app.querySelector(".chat-screen #message-input").value = ""; // Clear input field
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     app.querySelector(".chat-screen #exit-chat").addEventListener("click",function(){
-        socket.emit("exituser",uname);
+        socket.emit("exituser",name);
         window.location.href = window.location.href;
     })
 
